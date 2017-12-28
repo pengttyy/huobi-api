@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>huobi-websocket-spring-boot-starter</module>
-        <module>huobi-rest</module>
+        <module>huobi-rest-spring-boot-starter</module>
     </modules>
     <packaging>pom</packaging>
 
