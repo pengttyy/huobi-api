@@ -6,6 +6,10 @@
     <groupId>com.pengttyy</groupId>
     <artifactId>huobi-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>huobi-websocket-spring-boot-starter</module>
+        <module>huobi-rest</module>
+    </modules>
     <packaging>pom</packaging>
 
     <name>huobi-api</name>
@@ -24,13 +28,13 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <!--<build>-->
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
+    <!--</build>-->
 
 </project>
