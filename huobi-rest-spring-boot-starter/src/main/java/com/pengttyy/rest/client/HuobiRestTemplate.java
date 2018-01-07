@@ -1,11 +1,13 @@
 package com.pengttyy.rest.client;
 
+import com.pengttyy.rest.autoconfigure.HuobiRestProperties;
 import com.pengttyy.rest.entity.Result;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -34,8 +36,9 @@ import java.util.Set;
  */
 public class HuobiRestTemplate extends RestTemplate implements IHuobiRestTemplate {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static final String ACCESS_KEY = "";
-    public static final String SECRET_KEY = "";
+
+    @Autowired
+    private HuobiRestProperties huobiRestProperties;
 
     @Override
     protected <T> T doExecute(URI url, HttpMethod method, RequestCallback requestCallback, ResponseExtractor<T> responseExtractor) throws RestClientException {
@@ -78,7 +81,7 @@ public class HuobiRestTemplate extends RestTemplate implements IHuobiRestTemplat
     private MultiValueMap<String, String> appendAuthenticationParams(MultiValueMap<String, String> queryParams) {
         LinkedMultiValueMap<String, String> allParams = new LinkedMultiValueMap<>();
         allParams.putAll(queryParams);
-        allParams.add("AccessKeyId", ACCESS_KEY);
+        allParams.add("AccessKeyId", huobiRestProperties.getAccessKey());
         allParams.add("SignatureMethod", "HmacSHA256");
         allParams.add("SignatureVersion", "2");
         String utc = DateFormatUtils.formatUTC(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
@@ -104,7 +107,7 @@ public class HuobiRestTemplate extends RestTemplate implements IHuobiRestTemplat
                 .append(queryParamStr);
 
         logger.debug("签名计算的字符串：{}", signatureTarget.toString());
-        return urlEncode(Base64.encodeBase64String(HmacUtils.hmacSha256(SECRET_KEY, signatureTarget.toString())));
+        return urlEncode(Base64.encodeBase64String(HmacUtils.hmacSha256(huobiRestProperties.getSecretKey(), signatureTarget.toString())));
     }
 
     private String urlEncode(String value) {
