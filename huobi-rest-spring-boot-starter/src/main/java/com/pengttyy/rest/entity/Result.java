@@ -1,5 +1,7 @@
 package com.pengttyy.rest.entity;
 
+import java.util.Optional;
+
 /**
  * @author pengttyy pengttyy@gmail.com
  * @date 2018/1/6 20:04
@@ -12,8 +14,8 @@ public class Result<T> {
         this.status = status;
     }
 
-    public T getData() {
-        return data;
+    public Optional<T> getData() {
+        return Optional.ofNullable(this.data);
     }
 
     public void setData(T data) {
