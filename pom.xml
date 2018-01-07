@@ -5,7 +5,7 @@
 
     <groupId>com.pengttyy</groupId>
     <artifactId>huobi-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <modules>
         <module>huobi-websocket-spring-boot-starter</module>
         <module>huobi-rest-spring-boot-starter</module>
@@ -28,13 +28,34 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <!--<build>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
+    <build>
+        <plugins>
+            <!--<plugin>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-pengttyy-maven-repo</id>
+            <name>pengttyy-maven-repo</name>
+            <url>https://api.bintray.com/maven/pengttyy/maven-repo/huobi-api/;publish=1</url>
+        </repository>
+    </distributionManagement>
 
 </project>

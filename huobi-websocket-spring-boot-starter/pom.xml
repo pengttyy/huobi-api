@@ -4,15 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>huobi-websocket-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
-
+    <version>0.0.1</version>
     <name>huobi-websocket-spring-boot-starter</name>
     <description>huobi websocket接口</description>
 
     <parent>
         <groupId>com.pengttyy</groupId>
         <artifactId>huobi-api</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>0.0.1</version>
     </parent>
 
     <dependencies>
