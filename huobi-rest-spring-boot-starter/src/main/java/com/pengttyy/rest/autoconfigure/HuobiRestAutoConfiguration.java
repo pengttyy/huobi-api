@@ -2,13 +2,17 @@ package com.pengttyy.rest.autoconfigure;
 
 import com.pengttyy.rest.client.HuobiRestTemplate;
 import com.pengttyy.rest.client.IHuobiRestTemplate;
+import com.pengttyy.rest.interceptor.LogInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Collection;
 
 /**
  * @author pengttyy pengttyy@gmail.com
@@ -21,7 +25,13 @@ public class HuobiRestAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public IHuobiRestTemplate restTemplate(RestTemplateBuilder builder, HuobiRestProperties properties) {
-        return builder.setConnectTimeout(60 * 1000).rootUri(properties.getRootUrl()).build(HuobiRestTemplate.class);
+    public IHuobiRestTemplate restTemplate(RestTemplateBuilder builder, HuobiRestProperties properties, Collection<? extends ClientHttpRequestInterceptor> interceptors) {
+        return builder.setConnectTimeout(60 * 1000).rootUri(properties.getRootUrl()).additionalInterceptors(interceptors).build(HuobiRestTemplate.class);
     }
+
+    @Bean
+    public ClientHttpRequestInterceptor logInterceptor() {
+        return new LogInterceptor();
+    }
+
 }

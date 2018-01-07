@@ -10,10 +10,12 @@ import org.springframework.http.client.ClientHttpResponse;
 import java.io.IOException;
 
 /**
+ * 请求前/响应后打印日志
+ *
  * @author pengttyy pengttyy@gmail.com
  * @date 2018/1/6 14:45
  */
-public class AuthenticationInterceptor implements ClientHttpRequestInterceptor {
+public class LogInterceptor implements ClientHttpRequestInterceptor {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
