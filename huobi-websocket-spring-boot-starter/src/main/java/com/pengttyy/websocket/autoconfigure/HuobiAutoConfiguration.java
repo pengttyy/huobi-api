@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.client.WebSocketConnectionManager;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
@@ -19,6 +20,7 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
  */
 @Configuration
 @AutoConfigureAfter(WebSocketAutoConfiguration.class)
+@EnableScheduling
 public class HuobiAutoConfiguration {
     private String webSocketUri = "wss://api.huobi.pro/ws";
 

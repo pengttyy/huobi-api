@@ -29,7 +29,10 @@ public class HuobiRestAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public HuobiRestTemplate restTemplate(RestTemplateBuilder builder, HuobiRestProperties properties, Collection<? extends ClientHttpRequestInterceptor> interceptors) {
-        return builder.setConnectTimeout(60 * 1000).rootUri(properties.getRootUrl()).additionalInterceptors(interceptors).build(HuobiRestTemplate.class);
+        return builder.setConnectTimeout(1000).setReadTimeout(2000)
+                .rootUri(properties.getRootUrl())
+                .additionalInterceptors(interceptors)
+                .build(HuobiRestTemplate.class);
     }
 
     @Bean

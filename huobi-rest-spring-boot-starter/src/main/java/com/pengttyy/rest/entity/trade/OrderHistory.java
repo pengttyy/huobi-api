@@ -3,6 +3,8 @@ package com.pengttyy.rest.entity.trade;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * 已成功完成的订单
  *
@@ -19,11 +21,11 @@ public class OrderHistory {
     private String symbol;
     private String type;
     private String source;
-    private String price;
+    private BigDecimal price;
     @JsonProperty("filled-amount")
-    private String filledAmount;
+    private BigDecimal filledAmount;
     @JsonProperty("filled-fees")
-    private String filledFees;
+    private BigDecimal filledFees;
     @JsonProperty("created-at")
     private long createdAt;
 }

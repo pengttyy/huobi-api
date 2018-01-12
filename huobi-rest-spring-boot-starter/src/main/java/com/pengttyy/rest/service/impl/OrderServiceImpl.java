@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderServiceImpl implements IorderService {
-    private static final String SIZE = "1";
+    private static final String SIZE = "2";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
@@ -28,8 +28,17 @@ public class OrderServiceImpl implements IorderService {
         Result<List<OrderHistory>> orderHistoryResult = this.restTemplate.getForList("/v1/order/matchresults?symbol={symbol}&size={size}",
                 new ParameterizedTypeReference<Result<List<OrderHistory>>>() {
                 }, symbol, SIZE);
-        Optional<OrderHistory> first = orderHistoryResult.getData().get().stream().findFirst();
-        return first;
+        Optional<List<OrderHistory>> data = orderHistoryResult.getData();
+        if (data.isPresent() && data.get().size() == 2) {
+            List<OrderHistory> orderHistories = data.get();
+            OrderHistory orderHistory = orderHistories.get(0);
+            OrderHistory secondOrder = orderHistories.get(1);
+            if (orderHistory.getType().equals(secondOrder.getType())) {
+                orderHistory.setFilledAmount(orderHistory.getFilledAmount().add(secondOrder.getFilledAmount()));
+                return Optional.of(orderHistory);
+            }
+        }
+        return orderHistoryResult.getData().get().stream().findFirst();
     }
 
     @Override
