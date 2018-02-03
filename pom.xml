@@ -9,6 +9,7 @@
     <modules>
         <module>huobi-websocket-spring-boot-starter</module>
         <module>huobi-rest-spring-boot-starter</module>
+        <module>huobi-netty-websocket-starter</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -30,10 +31,6 @@
 
     <build>
         <plugins>
-            <!--<plugin>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
