@@ -1,4 +1,4 @@
-package com.pengttyy.rest.entity;
+package com.pengttyy.rest.entity.trade;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

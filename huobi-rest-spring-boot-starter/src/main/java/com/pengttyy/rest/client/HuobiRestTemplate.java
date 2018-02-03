@@ -1,7 +1,6 @@
 package com.pengttyy.rest.client;
 
 import com.pengttyy.rest.autoconfigure.HuobiRestProperties;
-import com.pengttyy.rest.entity.Result;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -21,12 +20,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * huobi请求的RestTemplate
@@ -44,14 +45,18 @@ public class HuobiRestTemplate extends RestTemplate implements IHuobiRestTemplat
     protected <T> T doExecute(URI url, HttpMethod method, RequestCallback requestCallback, ResponseExtractor<T> responseExtractor) throws RestClientException {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUri(url);
         UriComponents uriComponents = uriComponentsBuilder.build();
-
         MultiValueMap<String, String> allQueryParams = appendAuthenticationParams(uriComponents.getQueryParams());
 
         //todo java8收集器
         //参数排序
         Set<String> keys = allQueryParams.keySet();
         MultiValueMap<String, String> newQueryParams = new LinkedMultiValueMap<>();
-        keys.stream().sorted().forEach(key -> newQueryParams.put(key, allQueryParams.get(key)));
+        keys.stream().sorted().forEach(key -> {
+            List<String> collect = allQueryParams.get(key).stream()
+                    .map(this::encode)
+                    .collect(Collectors.toList());
+            newQueryParams.put(key, collect);
+        });
 
         //拼接查询参数
         StringBuilder queryParamsStr = new StringBuilder();
@@ -73,6 +78,15 @@ public class HuobiRestTemplate extends RestTemplate implements IHuobiRestTemplat
         return super.doExecute(newURI, method, requestCallback, responseExtractor);
     }
 
+    private String encode(String str) {
+        try {
+            return URLEncoder.encode(str, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return str;
+        }
+    }
+
     /**
      * 添加认证参数
      *
@@ -85,7 +99,7 @@ public class HuobiRestTemplate extends RestTemplate implements IHuobiRestTemplat
         allParams.add("SignatureMethod", "HmacSHA256");
         allParams.add("SignatureVersion", "2");
         String utc = DateFormatUtils.formatUTC(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
-        allParams.add("Timestamp", urlEncode(utc));
+        allParams.add("Timestamp", utc);
 
         return allParams;
     }
@@ -107,15 +121,7 @@ public class HuobiRestTemplate extends RestTemplate implements IHuobiRestTemplat
                 .append(queryParamStr);
 
         logger.debug("签名计算的字符串：{}", signatureTarget.toString());
-        return urlEncode(Base64.encodeBase64String(HmacUtils.hmacSha256(huobiRestProperties.getSecretKey(), signatureTarget.toString())));
-    }
-
-    private String urlEncode(String value) {
-        try {
-            return URLEncoder.encode(value, "utf-8");
-        } catch (Exception e) {
-            return value;
-        }
+        return encode(Base64.encodeBase64String(HmacUtils.hmacSha256(huobiRestProperties.getSecretKey(), signatureTarget.toString())));
     }
 
     @Override

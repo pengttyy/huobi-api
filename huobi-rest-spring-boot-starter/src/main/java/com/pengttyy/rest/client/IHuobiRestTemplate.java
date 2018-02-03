@@ -1,6 +1,5 @@
 package com.pengttyy.rest.client;
 
-import com.pengttyy.rest.entity.Result;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.RestClientException;
 

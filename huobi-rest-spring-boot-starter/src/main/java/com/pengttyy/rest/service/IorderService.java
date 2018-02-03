@@ -1,9 +1,12 @@
 package com.pengttyy.rest.service;
 
-import com.pengttyy.rest.entity.Place;
-import com.pengttyy.rest.entity.trade.OrderHistory;
+import com.pengttyy.rest.entity.trade.OrderDetail;
+import com.pengttyy.rest.entity.trade.Place;
+import com.pengttyy.rest.entity.type.OrderStatusEnum;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * 交易订单相关服务接口
@@ -15,10 +18,21 @@ public interface IorderService {
     /**
      * 查询最后一次订单成交记录
      *
-     * @param symbol 交易对
+     * @param orderId 订单id
      * @return 最后一次交易成功结果
      */
-    Optional<OrderHistory> findLatestOrderHistory(String symbol);
+    Optional<OrderDetail> getOrderDetail(String orderId);
+
+
+    /**
+     * 查询历史订单信息
+     *
+     * @param symbol 交易对
+     * @param status 状态枚举
+     * @param size   查询记录大小
+     * @return 订单信息集合
+     */
+    List<OrderDetail> findOrders(String symbol, Set<OrderStatusEnum> status, int size);
 
     /**
      * 创建订单

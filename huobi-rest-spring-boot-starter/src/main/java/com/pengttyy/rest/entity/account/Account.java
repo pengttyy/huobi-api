@@ -1,4 +1,4 @@
-package com.pengttyy.rest.entity;
+package com.pengttyy.rest.entity.account;
 
 import lombok.Data;
 

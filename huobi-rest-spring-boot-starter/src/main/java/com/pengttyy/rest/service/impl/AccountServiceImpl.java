@@ -4,10 +4,10 @@ package com.pengttyy.rest.service.impl;/**
  */
 
 import com.pengttyy.rest.client.HuobiRestTemplate;
-import com.pengttyy.rest.entity.Account;
-import com.pengttyy.rest.entity.AccountCurrency;
-import com.pengttyy.rest.entity.Currency;
-import com.pengttyy.rest.entity.Result;
+import com.pengttyy.rest.client.Result;
+import com.pengttyy.rest.entity.account.Account;
+import com.pengttyy.rest.entity.account.AccountCurrency;
+import com.pengttyy.rest.entity.account.Currency;
 import com.pengttyy.rest.service.IAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

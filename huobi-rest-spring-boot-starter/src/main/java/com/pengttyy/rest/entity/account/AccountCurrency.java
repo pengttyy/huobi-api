@@ -1,4 +1,4 @@
-package com.pengttyy.rest.entity;/**
+package com.pengttyy.rest.entity.account;/**
  * @author pengttyy pengttyy@gmail.com
  * @date 2018/1/7 21:52
  */

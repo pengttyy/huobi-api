@@ -1,6 +1,6 @@
 package com.pengttyy.rest.service;
 
-import com.pengttyy.rest.entity.Account;
+import com.pengttyy.rest.entity.account.Account;
 
 import java.util.List;
 

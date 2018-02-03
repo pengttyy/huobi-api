@@ -22,6 +22,7 @@ public class LogInterceptor implements ClientHttpRequestInterceptor {
     public ClientHttpResponse intercept(HttpRequest request, byte[] body,
                                         ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {
         logger.info("URI:{}", request.getURI().toURL().toString());
-        return clientHttpRequestExecution.execute(request, body);
+        ClientHttpResponse execute = clientHttpRequestExecution.execute(request, body);
+        return execute;
     }
 }
